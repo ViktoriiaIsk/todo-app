@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 type Todo = {
-  id: string;
-  text: string;
-  completed: boolean;
-  category: string;
-};
+    id: string;
+    text: string;
+    completed: boolean;
+    category: string;
+    description: string; 
+  };
 
 type TodoState = {
   todos: Todo[];
@@ -63,12 +64,13 @@ const todoSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    addTodo: (state, action: PayloadAction<{ text: string; category: string }>) => {
+    addTodo: (state, action: PayloadAction<{ text: string; category: string; description?: string }>) => {
       state.todos.push({
         id: crypto.randomUUID(),
         text: action.payload.text,
         completed: false,
         category: action.payload.category,
+        description: action.payload.description || "No description provided.",
       });
     },
     removeTodo: (state, action: PayloadAction<string>) => {
@@ -78,6 +80,13 @@ const todoSlice = createSlice({
         const todo = state.todos.find((t) => t.id === action.payload);
         if (todo) {
           todo.completed = !todo.completed;
+        }
+      },
+      editTodo: (state, action: PayloadAction<{ id: string; text: string; category: string }>) => {
+        const todo = state.todos.find((t) => t.id === action.payload.id);
+        if (todo) {
+          todo.text = action.payload.text;
+          todo.category = action.payload.category;
         }
       },
   },
@@ -103,5 +112,5 @@ const todoSlice = createSlice({
   },
 });
 
-export const { addTodo, removeTodo, toggleTodo } = todoSlice.actions;
+export const { addTodo, removeTodo, toggleTodo, editTodo } = todoSlice.actions;
 export default todoSlice.reducer;
