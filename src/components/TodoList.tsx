@@ -6,7 +6,7 @@ import { fetchCategories } from "@/store/categorySlice";
 import { useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { X, Pencil, ChevronDown } from "lucide-react";
+import { X, Pencil } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox"; 
 import EditTodoDialog from "./EditTodoDialog";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
