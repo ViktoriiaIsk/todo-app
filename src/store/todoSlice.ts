@@ -21,6 +21,7 @@ const initialState: TodoState = {
   loading: false,
 };
 
+// Fetch todos
 export const fetchTodos = createAsyncThunk<Todo[], void, AsyncThunkConfig>(
   "todos/fetchTodos",
   async (_, { rejectWithValue }) => {
@@ -34,7 +35,7 @@ export const fetchTodos = createAsyncThunk<Todo[], void, AsyncThunkConfig>(
   }
 );
 
-// AsyncThunk
+// Add todo (AsyncThunk)
 export const addTodoAsync = createAsyncThunk<Todo, { text: string; category: string }, AsyncThunkConfig>(
   "todos/addTodo",
   async (newTodo, { rejectWithValue }) => {
@@ -62,7 +63,6 @@ const todoSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    // Reducer
     addTodo: (state, action: PayloadAction<{ text: string; category: string }>) => {
       state.todos.push({
         id: crypto.randomUUID(),
@@ -70,6 +70,9 @@ const todoSlice = createSlice({
         completed: false,
         category: action.payload.category,
       });
+    },
+    removeTodo: (state, action: PayloadAction<string>) => {
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -94,5 +97,5 @@ const todoSlice = createSlice({
   },
 });
 
-export const { addTodo } = todoSlice.actions;
+export const { addTodo, removeTodo } = todoSlice.actions;
 export default todoSlice.reducer;

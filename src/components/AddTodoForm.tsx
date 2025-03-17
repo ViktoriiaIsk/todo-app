@@ -4,6 +4,7 @@ import { addTodoAsync } from "@/store/todoSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "sonner";
 
 const AddTodoForm = () => {
   const [text, setText] = useState("");
@@ -15,6 +16,7 @@ const AddTodoForm = () => {
     if (!text.trim()) return;
 
     dispatch(addTodoAsync({ text, category }));
+    toast.success(`Task "${text}" added!`);
     setText("");
   };
 

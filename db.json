@@ -101,6 +101,12 @@
       "text": "Call to mom",
       "completed": false,
       "category": "Personal"
+    },
+    {
+      "id": "e28c75f9-fc65-4ec0-bfaf-3ce5c439bcc6",
+      "text": "Finish exam ",
+      "completed": false,
+      "category": "Work"
     }
   ],
   "categories": [
