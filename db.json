@@ -95,28 +95,39 @@
       "text": "Read chapter of technical book",
       "completed": true,
       "category": "Learning"
+    },
+    {
+      "id": "d083ffb7-b91a-4d73-aefa-2f6d96142154",
+      "text": "Call to mom",
+      "completed": false,
+      "category": "Personal"
     }
   ],
   "categories": [
     {
       "name": "Work",
-      "color": "#f59e0b"
+      "color": "#f59e0b",
+      "id": "7bef"
     },
     {
       "name": "Personal",
-      "color": "#ef4444"
+      "color": "#ef4444",
+      "id": "4e5c"
     },
     {
       "name": "Shopping",
-      "color": "#3b82f6"
+      "color": "#3b82f6",
+      "id": "5119"
     },
     {
       "name": "Health",
-      "color": "#10b981"
+      "color": "#10b981",
+      "id": "6613"
     },
     {
       "name": "Learning",
-      "color": "#8b5cf6"
+      "color": "#8b5cf6",
+      "id": "92ad"
     }
   ]
 }

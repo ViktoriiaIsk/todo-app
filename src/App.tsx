@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { fetchTodos } from "@/store/todoSlice";
 import Layout from "@/components/Layout";
 import TodoList from "@/components/TodoList";
+import AddTodoForm from "@/components/AddTodoForm";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const App = () => {
 
   return (
     <Layout>
+      <AddTodoForm />
       <TodoList />
     </Layout>
   );
