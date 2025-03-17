@@ -21,26 +21,28 @@ const AddTodoForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2 mb-4">
-      <Input
-        type="text"
-        placeholder="Add a new todo..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className="w-full"
-      />
-      <Select onValueChange={setCategory} defaultValue={category}>
-        <SelectTrigger className="w-[150px]">
-          <SelectValue placeholder="Category" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="Work">Work</SelectItem>
-          <SelectItem value="Personal">Personal</SelectItem>
-          <SelectItem value="Shopping">Shopping</SelectItem>
-        </SelectContent>
-      </Select>
-      <Button type="submit" className="px-4">+ Add</Button>
-    </form>
+    <form onSubmit={handleSubmit} className="flex items-center gap-2 mb-4 p-2 bg-white shadow-sm rounded-lg">
+    <Input
+      type="text"
+      placeholder="Add a new todo..."
+      value={text}
+      onChange={(e) => setText(e.target.value)}
+      className="w-full border-gray-300 focus:border-gray-500 rounded-md"
+    />
+    <Select onValueChange={setCategory} defaultValue={category}>
+      <SelectTrigger className="w-[140px] text-sm border-gray-300 focus:ring-gray-500">
+        <SelectValue placeholder="Category" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="Work">Work</SelectItem>
+        <SelectItem value="Personal">Personal</SelectItem>
+        <SelectItem value="Shopping">Shopping</SelectItem>
+      </SelectContent>
+    </Select>
+    <Button type="submit" className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900">
+      + Add
+    </Button>
+  </form>
   );
 };
 
