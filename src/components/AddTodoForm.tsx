@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import { RootState, useAppDispatch } from "@/store/store";
-import { fetchCategories } from "@/store/categorySlice"; // 👈 Загружаем категории
+import { fetchCategories } from "@/store/categorySlice";
 import { addTodoAsync } from "@/store/todoSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,8 +21,10 @@ const AddTodoForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim() || !category) return;
-
-    dispatch(addTodoAsync({ text, category }));
+  
+    const selectedCategory = categories.find((c) => c.name === category);
+    dispatch(addTodoAsync({ text, category: selectedCategory?.id || "" })); 
+  
     toast.success(`Task "${text}" added!`);
     setText("");
     setCategory(""); 
