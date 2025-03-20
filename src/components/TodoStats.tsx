@@ -10,11 +10,11 @@ const TodoStats = () => {
   const completionPercentage = totalTodos > 0 ? Math.round((completedTodos / totalTodos) * 100) : 0;
 
   return (
-    <div className="flex justify-between p-4 bg-gray-100 rounded-lg mt-4 text-sm">
-      <span><strong>Total:</strong> {totalTodos} todos</span>
-      <span><strong>Active:</strong> {activeTodos} todos</span>
-      <span><strong>Completed:</strong> {completedTodos} todos</span>
-      <span><strong>{completionPercentage}% completed</strong></span>
+    <div className="flex justify-between  mt-4 text-sm text-gray-500">
+      <span>Total: {totalTodos} todos</span>
+      <span>Active: {activeTodos} todos</span>
+      <span>Completed:{completedTodos} todos</span>
+      <span>{completionPercentage}% completed</span>
     </div>
   );
 };
