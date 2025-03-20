@@ -1,36 +1,38 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { editTodo } from "@/store/todoSlice";
+import {  useSelector } from "react-redux";
+import { editTodoAsync } from "@/store/todoSlice";
 import { RootState } from "@/store/store";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
-
+import { useAppDispatch } from "@/store/store";
 type EditTodoDialogProps = {
   id: string;
   currentText: string;
   currentCategory: string;
   triggerButton: React.ReactNode;
 };
-
 const EditTodoDialog = ({ id, currentText, currentCategory, triggerButton }: EditTodoDialogProps) => {
   const [open, setOpen] = useState(false); 
   const [text, setText] = useState(currentText);
   const [category, setCategory] = useState(currentCategory);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const categories = useSelector((state: RootState) => state.categories.categories);
 
   const handleSave = () => {
     if (text.trim()) {
-      dispatch(editTodo({ id, text, category }));
+      const selectedCategory = categories.find((cat) => cat.name === category);
+      if (!selectedCategory) return;
+
+      dispatch(editTodoAsync({ id, text, category: selectedCategory.id })); 
       setOpen(false); 
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild onClick={() => setOpen(true)}>{triggerButton}</DialogTrigger>
+      <DialogTrigger asChild>{triggerButton}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit Todo</DialogTitle>

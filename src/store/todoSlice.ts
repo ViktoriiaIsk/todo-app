@@ -77,6 +77,24 @@ export const deleteTodoAsync = createAsyncThunk<string, string, AsyncThunkConfig
   }
 );
 
+export const editTodoAsync = createAsyncThunk<
+  Todo,
+  { id: string; text: string; category: string },
+  AsyncThunkConfig
+>("todos/editTodo", async ({ id, text, category }, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`http://localhost:5000/todos/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text, category }),
+    });
+
+    if (!response.ok) throw new Error("Error updating todo");
+    return (await response.json()) as Todo;
+  } catch (error) {
+    return rejectWithValue("Error updating todo");
+  }
+});
 
 const todoSlice = createSlice({
   name: "todos",
@@ -98,13 +116,6 @@ const todoSlice = createSlice({
           todo.completed = !todo.completed;
         }
       },
-      editTodo: (state, action: PayloadAction<{ id: string; text: string; category: string }>) => {
-        const todo = state.todos.find((t) => t.id === action.payload.id);
-        if (todo) {
-          todo.text = action.payload.text;
-          todo.category = action.payload.category;
-        }
-      },
   },
   extraReducers: (builder) => {
     builder
@@ -122,19 +133,21 @@ const todoSlice = createSlice({
       .addCase(addTodoAsync.fulfilled, (state, action: PayloadAction<Todo>) => {
         state.todos.push(action.payload);
       })
-      .addCase(addTodoAsync.rejected, (state, action) => {
-        console.error(action.payload);
+      
+      .addCase(editTodoAsync.fulfilled, (state, action: PayloadAction<Todo>) => {
+        const index = state.todos.findIndex((todo) => todo.id === action.payload.id);
+        if (index !== -1) {
+          state.todos[index] = action.payload;
+        }
       })
       // Add a case for the deleteTodoAsync.fulfilled action
       .addCase(deleteTodoAsync.fulfilled, (state, action: PayloadAction<string>) => {
         state.todos = state.todos.filter((todo) => todo.id !== action.payload);
       })
-      .addCase(deleteTodoAsync.rejected, (state, action) => {
-        console.error(action.payload);
-      });
+      
   }
 });
   
 
-export const { addTodo, toggleTodo, editTodo } = todoSlice.actions;
+export const { addTodo, toggleTodo} = todoSlice.actions;
 export default todoSlice.reducer;
