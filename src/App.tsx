@@ -5,7 +5,7 @@ import { fetchTodos } from "@/store/todoSlice";
 import Layout from "@/components/Layout";
 import TodoList from "@/components/TodoList";
 import AddTodoForm from "@/components/AddTodoForm";
-
+import Filters from "./components/Filters";
 const App = () => {
   const dispatch = useDispatch();
 
@@ -17,6 +17,7 @@ const App = () => {
     <Layout>
         <Toaster richColors position="top-right" /> 
       <AddTodoForm />
+      <Filters /> 
       <TodoList />
     </Layout>
   );

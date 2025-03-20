@@ -11,10 +11,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import EditTodoDialog from "./EditTodoDialog";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { deleteTodoAsync } from "@/store/todoSlice";
+
 const TodoList = () => {
   const todos = useSelector((state: RootState) => state.todos.todos);
   const dispatch: AppDispatch = useDispatch();
   const categories = useSelector((state: RootState) => state.categories.categories);
+  const filterCategory = useSelector((state: RootState) => state.todos.filterCategory);
+  const filterStatus = useSelector((state: RootState) => state.todos.filterStatus);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -30,10 +33,23 @@ const TodoList = () => {
   const handleDelete = (id: string) => {
     dispatch(deleteTodoAsync(id)); 
   };
+
+  const filteredTodos = todos.filter((todo) => {
+    const categoryId = categories.find(cat => cat.name === filterCategory)?.id;
+const categoryMatch = filterCategory === "All" || todo.category === categoryId;
+  
+    const statusMatch =
+      filterStatus === "All" ||
+      (filterStatus === "Completed" && todo.completed) ||
+      (filterStatus === "Active" && !todo.completed);
+  
+    return categoryMatch && statusMatch;
+  });
+  
   
   return (
     <Accordion type="single" collapsible className="space-y-2">
-      {todos.map((todo) => (
+      {filteredTodos.map((todo) => (
        <AccordionItem key={todo.id} value={todo.id}>
        <div className="flex items-center justify-between px-4 py-4 border rounded-lg bg-white shadow-sm hover:bg-gray-100 transition gap-4 min-h-[60px]">
      

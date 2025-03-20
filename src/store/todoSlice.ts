@@ -11,6 +11,8 @@ type Todo = {
 type TodoState = {
   todos: Todo[];
   loading: boolean;
+  filterCategory: string;
+  filterStatus: string;
 };
 
 type AsyncThunkConfig = {
@@ -20,6 +22,8 @@ type AsyncThunkConfig = {
 const initialState: TodoState = {
   todos: [],
   loading: false,
+  filterCategory: "All", 
+  filterStatus: "All", 
 };
 
 // Fetch todos
@@ -116,6 +120,14 @@ const todoSlice = createSlice({
           todo.completed = !todo.completed;
         }
       },
+      setFilterCategory: (state, action: PayloadAction<string>) => {
+        state.filterCategory = action.payload;
+      },
+      
+      setFilterStatus: (state, action: PayloadAction<string>) => {
+        state.filterStatus = action.payload;
+      },
+      
   },
   extraReducers: (builder) => {
     builder
@@ -149,5 +161,5 @@ const todoSlice = createSlice({
 });
   
 
-export const { addTodo, toggleTodo} = todoSlice.actions;
+export const { addTodo, toggleTodo, setFilterCategory, setFilterStatus} = todoSlice.actions;
 export default todoSlice.reducer;
