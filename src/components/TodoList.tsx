@@ -11,7 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import EditTodoDialog from "./EditTodoDialog";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { deleteTodoAsync } from "@/store/todoSlice";
-
+import TodoStats from "./TodoStats";
 const TodoList = () => {
   const todos = useSelector((state: RootState) => state.todos.todos);
   const dispatch: AppDispatch = useDispatch();
@@ -48,6 +48,7 @@ const categoryMatch = filterCategory === "All" || todo.category === categoryId;
   
   
   return (
+    <>
     <Accordion type="single" collapsible className="space-y-2">
       {filteredTodos.map((todo) => (
        <AccordionItem key={todo.id} value={todo.id}>
@@ -92,6 +93,8 @@ const categoryMatch = filterCategory === "All" || todo.category === categoryId;
         </AccordionItem>
       ))}
     </Accordion>
+    <TodoStats />
+    </>
   );
 };
 
