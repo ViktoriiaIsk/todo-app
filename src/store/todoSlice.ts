@@ -60,6 +60,24 @@ export const addTodoAsync = createAsyncThunk<Todo, { text: string; category: str
   }
 );
 
+// AsyncThunk for deleting a todo from the server
+export const deleteTodoAsync = createAsyncThunk<string, string, AsyncThunkConfig>(
+  "todos/deleteTodo",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`http://localhost:5000/todos/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error("Error deleting todo");
+      return id; 
+    } catch (error) {
+      return rejectWithValue("Error deleting todo");
+    }
+  }
+);
+
+
 const todoSlice = createSlice({
   name: "todos",
   initialState,
@@ -73,9 +91,7 @@ const todoSlice = createSlice({
         description: action.payload.description || "No description provided.",
       });
     },
-    removeTodo: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-    },
+    
     toggleTodo: (state, action: PayloadAction<string>) => {
         const todo = state.todos.find((t) => t.id === action.payload);
         if (todo) {
@@ -108,9 +124,17 @@ const todoSlice = createSlice({
       })
       .addCase(addTodoAsync.rejected, (state, action) => {
         console.error(action.payload);
+      })
+      // Add a case for the deleteTodoAsync.fulfilled action
+      .addCase(deleteTodoAsync.fulfilled, (state, action: PayloadAction<string>) => {
+        state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      })
+      .addCase(deleteTodoAsync.rejected, (state, action) => {
+        console.error(action.payload);
       });
-  },
+  }
 });
+  
 
-export const { addTodo, removeTodo, toggleTodo, editTodo } = todoSlice.actions;
+export const { addTodo, toggleTodo, editTodo } = todoSlice.actions;
 export default todoSlice.reducer;

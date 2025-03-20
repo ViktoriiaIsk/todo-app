@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store/store";
 import { RootState } from "@/store/store";
-import { removeTodo, toggleTodo } from "@/store/todoSlice"; 
+import { toggleTodo } from "@/store/todoSlice"; 
 import { fetchCategories } from "@/store/categorySlice";
 import { useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -10,7 +10,7 @@ import { X, Pencil } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox"; 
 import EditTodoDialog from "./EditTodoDialog";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-
+import { deleteTodoAsync } from "@/store/todoSlice";
 const TodoList = () => {
   const todos = useSelector((state: RootState) => state.todos.todos);
   const dispatch: AppDispatch = useDispatch();
@@ -27,7 +27,10 @@ const TodoList = () => {
   const getCategoryColor = (categoryId: string) => {
     return categories.find((c) => c.id === categoryId)?.color || "#6b7280";
   };
-
+  const handleDelete = (id: string) => {
+    dispatch(deleteTodoAsync(id)); 
+  };
+  
   return (
     <Accordion type="single" collapsible className="space-y-2">
       {todos.map((todo) => (
@@ -62,9 +65,9 @@ const TodoList = () => {
               <AccordionTrigger className="flex items-center">
               
               </AccordionTrigger>  
-              <Button variant="outline" size="icon" onClick={() => dispatch(removeTodo(todo.id))}>
-                <X size={16} />
-              </Button>
+              <Button variant="outline" size="icon" onClick={() => handleDelete(todo.id)}>
+  <X size={16} />
+</Button>
             </div>
           </div>
           <AccordionContent className="px-4 py-2 bg-gray-50 text-gray-600">

@@ -113,20 +113,8 @@
       "description": "Read a chapter from a technical book for knowledge gain"
     },
     {
-      "id": "9dc0f0f8-e190-4b7b-aa7c-e3c2e4db2c64",
-      "text": "todo",
-      "completed": false,
-      "category": "Shopping"
-    },
-    {
-      "id": "cbc1b13c-bd6a-43e8-931a-b3e1056f2f1a",
-      "text": "todo",
-      "completed": false,
-      "category": "Shopping"
-    },
-    {
-      "id": "b80e193a-9f21-4801-a77e-b15d3a73cb7f",
-      "text": "todo",
+      "id": "fb45afed-4b6e-48d3-b141-02586c31eab6",
+      "text": "walk with a dog",
       "completed": false,
       "category": "2"
     }
