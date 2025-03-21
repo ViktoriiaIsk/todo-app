@@ -82,6 +82,7 @@ const TodoList = () => {
                 <EditTodoDialog 
                   id={todo.id} 
                   currentText={todo.text} 
+                  currentDescription={todo.description || ""} 
                   currentCategory={todo.category} 
                   triggerButton={
                     <Button variant={"ghost"} size="icon" className="hover:bg-gray-200">

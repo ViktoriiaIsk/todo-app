@@ -20,7 +20,7 @@ const initialState: CategoryState = {
 export const fetchCategories = createAsyncThunk<Category[]>(
   "categories/fetchCategories",
   async () => {
-    const response = await fetch("http://localhost:5000/categories");
+    const response = await fetch("https://my-todo-api.glitch.me/categories");
     return (await response.json()) as Category[];
   }
 );

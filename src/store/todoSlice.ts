@@ -31,7 +31,7 @@ export const fetchTodos = createAsyncThunk<Todo[], void, AsyncThunkConfig>(
   "todos/fetchTodos",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:5000/todos");
+      const response = await fetch("https://my-todo-api.glitch.me/todos");
       if (!response.ok) throw new Error("Error fetching todos");
       return (await response.json()) as Todo[];
     } catch (error) {
@@ -45,7 +45,7 @@ export const addTodoAsync = createAsyncThunk<Todo, { text: string; category: str
   "todos/addTodo",
   async (newTodo, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:5000/todos", {
+      const response = await fetch("https://my-todo-api.glitch.me/todos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -69,7 +69,7 @@ export const deleteTodoAsync = createAsyncThunk<string, string, AsyncThunkConfig
   "todos/deleteTodo",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:5000/todos/${id}`, {
+      const response = await fetch(`https://my-todo-api.glitch.me/todos/${id}`, {
         method: "DELETE",
       });
 
@@ -87,7 +87,7 @@ export const editTodoAsync = createAsyncThunk<
   AsyncThunkConfig
 >("todos/editTodo", async ({ id, text, category, description }, { rejectWithValue }) => {
   try {
-    const response = await fetch(`http://localhost:5000/todos/${id}`, {
+    const response = await fetch(`https://my-todo-api.glitch.me/todos/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text, category, description }),
