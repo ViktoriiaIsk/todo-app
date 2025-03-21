@@ -83,14 +83,14 @@ export const deleteTodoAsync = createAsyncThunk<string, string, AsyncThunkConfig
 
 export const editTodoAsync = createAsyncThunk<
   Todo,
-  { id: string; text: string; category: string },
+  { id: string; text: string; category: string; description: string }, 
   AsyncThunkConfig
->("todos/editTodo", async ({ id, text, category }, { rejectWithValue }) => {
+>("todos/editTodo", async ({ id, text, category, description }, { rejectWithValue }) => {
   try {
     const response = await fetch(`http://localhost:5000/todos/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, category }),
+      body: JSON.stringify({ text, category, description }),
     });
 
     if (!response.ok) throw new Error("Error updating todo");
@@ -99,6 +99,7 @@ export const editTodoAsync = createAsyncThunk<
     return rejectWithValue("Error updating todo");
   }
 });
+
 
 const todoSlice = createSlice({
   name: "todos",
