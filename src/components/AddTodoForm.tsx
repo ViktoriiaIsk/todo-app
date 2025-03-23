@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useSelector} from "react-redux";
-import { RootState, useAppDispatch } from "@/store/store";
-import { fetchCategories } from "@/store/categorySlice";
-import { addTodoAsync } from "@/store/todoSlice";
+import React, { useState } from "react";
+import { useFetchCategoriesQuery } from "@/store/categorySlice";
+import { useAddTodoMutation } from "@/store/todoSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -11,23 +9,19 @@ import { toast } from "sonner";
 const AddTodoForm = () => {
   const [text, setText] = useState("");
   const [category, setCategory] = useState("");
-  const dispatch = useAppDispatch();
-  const categories = useSelector((state: RootState) => state.categories.categories);
-
-  useEffect(() => {
-    dispatch(fetchCategories()); 
-  }, [dispatch]);
+  const { data: categories = [] } = useFetchCategoriesQuery();
+  const [addTodo] = useAddTodoMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim() || !category) return;
-  
+
     const selectedCategory = categories.find((c) => c.name === category);
-    dispatch(addTodoAsync({ text, category: selectedCategory?.id || "" })); 
-  
+    await addTodo({ text, category: selectedCategory?.id || "" });
+
     toast.success(`Task "${text}" added!`);
     setText("");
-    setCategory(""); 
+    setCategory("");
   };
 
   return (

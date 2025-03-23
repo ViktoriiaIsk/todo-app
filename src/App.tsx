@@ -1,23 +1,21 @@
-import { useEffect } from "react";
 import { Toaster } from "sonner";
-import { useDispatch } from "react-redux";
-import { fetchTodos } from "@/store/todoSlice";
 import Layout from "@/components/Layout";
 import TodoList from "@/components/TodoList";
 import AddTodoForm from "@/components/AddTodoForm";
 import Filters from "./components/Filters";
-const App = () => {
-  const dispatch = useDispatch();
+import { useFetchTodosQuery } from "@/store/todoSlice";
 
-  useEffect(() => {
-    dispatch(fetchTodos() as any);
-  }, [dispatch]);
+const App = () => {
+  const { isLoading, error } = useFetchTodosQuery();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading todos</div>;
 
   return (
     <Layout>
-        <Toaster richColors position="top-right" /> 
+      <Toaster richColors position="top-right" />
       <AddTodoForm />
-      <Filters /> 
+      <Filters />
       <TodoList />
     </Layout>
   );
